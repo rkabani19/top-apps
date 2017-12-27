@@ -52,24 +52,31 @@ public class ParseApps {
                     case XmlPullParser.END_TAG:
                         Log.d(TAG, "parse: Ending tag for " + tagName);
                         if (inEntry) {
-                            applications.add(currentEntry);
-                            inEntry = false;
-                        } else if ("name".equalsIgnoreCase(tagName)) {
-                            currentEntry.setName(textValue);
-                        } else if ("artist".equalsIgnoreCase(tagName)) {
-                            currentEntry.setArtist(textValue);
-                        } else if ("releaseDate".equalsIgnoreCase(tagName)) {
-                            currentEntry.setReleaseDate(textValue);
-                        } else if ("summary".equalsIgnoreCase(tagName)) {
-                            currentEntry.setSummary(textValue);
-                        } else if ("image".equalsIgnoreCase(tagName)) {
-                            currentEntry.setImageURL(textValue);
+                            if ("entry".equalsIgnoreCase(tagName)) {
+                                applications.add(currentEntry);
+                                inEntry = false;
+                            } else if ("name".equalsIgnoreCase(tagName)) {
+                                currentEntry.setName(textValue);
+                            } else if ("artist".equalsIgnoreCase(tagName)) {
+                                currentEntry.setArtist(textValue);
+                            } else if ("releaseDate".equalsIgnoreCase(tagName)) {
+                                currentEntry.setReleaseDate(textValue);
+                            } else if ("summary".equalsIgnoreCase(tagName)) {
+                                currentEntry.setSummary(textValue);
+                            } else if ("image".equalsIgnoreCase(tagName)) {
+                                currentEntry.setImageURL(textValue);
+                            }
                         }
                         break;
                     default:
                         //Nothing else to do
                 }
                 eventType = xapp.next();
+            }
+
+            for (FeedEntry applications: applications) {
+                Log.d(TAG, "==========================================================");
+                Log.d(TAG, applications.toString());
             }
 
         } catch (Exception e) {

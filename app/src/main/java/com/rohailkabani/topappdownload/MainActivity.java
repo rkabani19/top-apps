@@ -7,7 +7,6 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -21,9 +20,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String URL_TOP_10_FREE_APPS = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml";
+
         Log.d(TAG, "onCreate: starting AsyncTask");
         DownloadData downloadData = new DownloadData();
-        downloadData.execute("URL HERE");
+        downloadData.execute(URL_TOP_10_FREE_APPS);
         Log.d(TAG, "onCreate: done.");
     }
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "doInBackground: starts with " + strings[0]);
             String rssFeed = downloadXML(strings[0]);
             if (rssFeed == null) {
-                Log.e(TAG, "doInBackground: Error downloading.", );
+                Log.e(TAG, "doInBackground: Error downloading.");
             }
             return rssFeed;
         }
@@ -57,11 +58,28 @@ public class MainActivity extends AppCompatActivity {
 //                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 //                BufferedReader reader = new BufferedReader(inputStreamReader);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+                int charsRead;
+                char[] inputBuffer = new char[500];
+                while (true) {
+                    charsRead = reader.read(inputBuffer);
+                    if (charsRead < 0) {
+                        break;
+                    }
+                    if (charsRead > 0) {
+                        xmlResult.append(String.copyValueOf(inputBuffer, 0, charsRead));
+                    }
+                }
+                reader.close();
+                return xmlResult.toString();
             } catch (MalformedURLException e) {
                 Log.e(TAG, "downloadXML: Invalid URL " + e.getMessage() );
             } catch (IOException e) {
                 Log.e(TAG, "downloadXML: IO Exception reading data " + e.getLocalizedMessage() );
+            } catch (SecurityException e) {
+                Log.e(TAG, "downloadXML: Security Exception. " + e.getMessage());
             }
+            return null;
         }
     }
 }

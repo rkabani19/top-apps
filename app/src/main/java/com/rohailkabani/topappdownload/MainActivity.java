@@ -77,10 +77,11 @@ public class MainActivity extends AppCompatActivity {
             } catch (MalformedURLException e) {
                 Log.e(TAG, "downloadXML: Invalid URL " + e.getMessage() );
             } catch (IOException e) {
-                Log.e(TAG, "downloadXML: IO Exception reading data " + e.getLocalizedMessage() );
+                Log.e(TAG, "downloadXML: IO Exception reading data. " + e.getLocalizedMessage() );
             } catch (SecurityException e) {
                 Log.e(TAG, "downloadXML: Security Exception. " + e.getMessage());
             }
+
             return null;
         }
     }

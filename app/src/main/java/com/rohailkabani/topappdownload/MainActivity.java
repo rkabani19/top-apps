@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,18 +17,12 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ListView listApps;
-    private TextView tvName;
-    private TextView tvArtist;
-    private TextView tvSummary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listApps = (ListView) findViewById(R.id.xmlListView);
-        tvName = (TextView) findViewById(R.id.tvName);
-        tvArtist = (TextView) findViewById(R.id.tvArtist);
-        tvSummary = (TextView) findViewById(R.id.tvSummary);
 
         String URL_TOP_10_FREE_APPS = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml";
 

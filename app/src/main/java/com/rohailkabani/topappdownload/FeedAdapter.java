@@ -2,8 +2,12 @@ package com.rohailkabani.topappdownload;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -24,7 +28,27 @@ public class FeedAdapter extends ArrayAdapter {
         this.application = application;
     }
 
-//    tvName = (TextView) findViewById(R.id.tvName);
-//    tvArtist = (TextView) findViewById(R.id.tvArtist);
-//    tvSummary = (TextView) findViewById(R.id.tvSummary);
+    @Override
+    public int getCount() {
+        return application.size();
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        View view = layoutInflater.inflate(layoutResource, parent, false);
+        TextView tvName = (TextView) view.findViewById(R.id.tvName);
+        TextView tvArtist = (TextView) view.findViewById(R.id.tvArtist);
+        TextView tvSummary = (TextView) view.findViewById(R.id.tvSummary);
+
+        FeedEntry currentApp = application.get(position);
+
+        tvName.setText(currentApp.getName());
+        tvArtist.setText(currentApp.getName());
+        tvSummary.setText(currentApp.getName());
+
+        return view;
+    }
+
+
 }

@@ -33,7 +33,6 @@ public class FeedAdapter extends ArrayAdapter {
         return application.size();
     }
 
-    @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = layoutInflater.inflate(layoutResource, parent, false);
@@ -44,8 +43,8 @@ public class FeedAdapter extends ArrayAdapter {
         FeedEntry currentApp = application.get(position);
 
         tvName.setText(currentApp.getName());
-        tvArtist.setText(currentApp.getName());
-        tvSummary.setText(currentApp.getName());
+        tvArtist.setText(currentApp.getArtist());
+        tvSummary.setText(currentApp.getSummary());
 
         return view;
     }

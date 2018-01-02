@@ -27,10 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         String URL_TOP_10_FREE_APPS = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml";
 
-        Log.d(TAG, "onCreate: starting AsyncTask");
-        DownloadData downloadData = new DownloadData();
-        downloadData.execute(URL_TOP_10_FREE_APPS);
-        Log.d(TAG, "onCreate: done.");
+        downloadURL(URL_TOP_10_FREE_APPS);
     }
 
     @Override
@@ -57,6 +54,15 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+        downloadURL(URL_MNU);
+        return true;
+    }
+
+    private void downloadURL (String URL_MNU) {
+        Log.d(TAG, "onCreate: starting AsyncTask");
+        DownloadData downloadData = new DownloadData();
+        downloadData.execute(URL_MNU);
+        Log.d(TAG, "downloadURL: done.");
     }
 
     private class DownloadData extends AsyncTask<String, Void, String> {

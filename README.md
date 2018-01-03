@@ -1,2 +1,2 @@
 # Top Apps
-An RSS feed app for the top android apps int Play Store.
+An RSS feed app for the top mobile apps.

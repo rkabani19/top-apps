@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String STATE_LIMIT = "feedLimit";
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch (id){
+        switch (id) {
             case R.id.mnuFree:
                 URL_APPS = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=%d/xml";
                 break;
@@ -94,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
-    private void downloadURL (String URL_MNU) {
-        if (!URL_MNU.equalsIgnoreCase(feedCachedURL)){
+    private void downloadURL(String URL_MNU) {
+        if (!URL_MNU.equalsIgnoreCase(feedCachedURL)) {
             Log.d(TAG, "onCreate: starting AsyncTask");
             DownloadData downloadData = new DownloadData();
             downloadData.execute(URL_MNU);
@@ -119,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 //            ArrayAdapter<FeedEntry> arrayAdapter = new ArrayAdapter<FeedEntry>(
 //                    MainActivity.this, R.layout.list_item, parseApps.getApplications());
 //            listApps.setAdapter(arrayAdapter);
-            FeedAdapter feedAdapter = new FeedAdapter(MainActivity.this, R.layout.list_record, parseApps.getApplications());
+            FeedAdapter<FeedEntry> feedAdapter = new FeedAdapter<>(MainActivity.this, R.layout.list_record, parseApps.getApplications());
             listApps.setAdapter(feedAdapter);
         }
 
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             return rssFeed;
         }
 
-        private String downloadXML (String urlPath) {
+        private String downloadXML(String urlPath) {
             StringBuilder xmlResult = new StringBuilder();
 
             try {
@@ -161,9 +160,9 @@ public class MainActivity extends AppCompatActivity {
 
                 return xmlResult.toString();
             } catch (MalformedURLException e) {
-                Log.e(TAG, "downloadXML: Invalid URL " + e.getMessage() );
+                Log.e(TAG, "downloadXML: Invalid URL " + e.getMessage());
             } catch (IOException e) {
-                Log.e(TAG, "downloadXML: IO Exception reading data. " + e.getLocalizedMessage() );
+                Log.e(TAG, "downloadXML: IO Exception reading data. " + e.getLocalizedMessage());
             } catch (SecurityException e) {
                 Log.e(TAG, "downloadXML: Security Exception. " + e.getMessage());
             }

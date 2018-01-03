@@ -24,7 +24,7 @@ public class ParseApps {
         return applications;
     }
 
-    public boolean parse (String xmlData) {
+    public boolean parse(String xmlData) {
         boolean status = true;
         FeedEntry currentEntry = null;
         boolean inEntry = false;
@@ -74,7 +74,7 @@ public class ParseApps {
                 eventType = xapp.next();
             }
 
-            for (FeedEntry applications: applications) {
+            for (FeedEntry applications : applications) {
                 Log.d(TAG, "==========================================================");
                 Log.d(TAG, applications.toString());
             }

@@ -15,13 +15,13 @@ import java.util.List;
  * Created by rohailkabani on 2017-12-28.
  */
 
-public class FeedAdapter extends ArrayAdapter {
+public class FeedAdapter<T extends FeedEntry> extends ArrayAdapter {
     private static final String TAG = "FeedAdapter";
     private final int layoutResource;
     private final LayoutInflater layoutInflater;
-    private List<FeedEntry> application;
+    private List<T> application;
 
-    public FeedAdapter(@NonNull Context context, int resource, List<FeedEntry> application) {
+    public FeedAdapter(@NonNull Context context, int resource, List<T> application) {
         super(context, resource);
         this.layoutResource = resource;
         this.layoutInflater = LayoutInflater.from(context);
@@ -45,7 +45,7 @@ public class FeedAdapter extends ArrayAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        FeedEntry currentApp = application.get(position);
+        T currentApp = application.get(position);
 
         viewHolder.tvName.setText(currentApp.getName());
         viewHolder.tvArtist.setText(currentApp.getArtist());
@@ -54,12 +54,12 @@ public class FeedAdapter extends ArrayAdapter {
         return convertView;
     }
 
-    private  class ViewHolder {
+    private class ViewHolder {
         final TextView tvName;
         final TextView tvArtist;
         final TextView tvSummary;
 
-        ViewHolder (View v) {
+        ViewHolder(View v) {
             this.tvName = (TextView) v.findViewById(R.id.tvName);
             this.tvArtist = (TextView) v.findViewById(R.id.tvArtist);
             this.tvSummary = (TextView) v.findViewById(R.id.tvSummary);

@@ -18,16 +18,15 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ListView listApps;
-
+    private String URL_APPS = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=%d/xml";
+    private int feedLimit = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listApps = (ListView) findViewById(R.id.xmlListView);
 
-        String URL_TOP_10_FREE_APPS = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml";
-
-        downloadURL(URL_TOP_10_FREE_APPS);
+        downloadURL(String.format(URL_APPS, feedLimit));
     }
 
     @Override
@@ -39,22 +38,33 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        String URL_MNU;
 
         switch (id){
             case R.id.mnuFree:
-                URL_MNU = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml";
+                URL_APPS = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=%d/xml";
                 break;
             case R.id.mnuPaid:
-                URL_MNU = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/toppaidapplications/limit=10/xml";
+                URL_APPS = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/toppaidapplications/limit=%d/xml";
                 break;
             case R.id.mnuSongs:
-                URL_MNU = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=10/xml";
+                URL_APPS = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=%d/xml";
+                break;
+            case R.id.mnu10:
+            case R.id.mnu25:
+                if (!item.isChecked()) {
+                    item.setChecked(true);
+                    feedLimit = 35 - feedLimit;
+                    Log.d(TAG, "onOptionsItemSelected: " + item.getTitle() + " setting feed limit to " + feedLimit);
+                } else {
+                    Log.d(TAG, "onOptionsItemSelected: " + item.getTitle() + " feedLimit is unchanged.");
+                }
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
-        downloadURL(URL_MNU);
+
+        downloadURL(String.format(URL_APPS, feedLimit));
+
         return true;
     }
 
